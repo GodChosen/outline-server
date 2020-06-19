@@ -197,8 +197,8 @@ function get_random_port {
 
 function create_persisted_state_dir() {
   readonly STATE_DIR="$SHADOWBOX_DIR/persisted-state"
-  mkdir -p --mode=770 "${STATE_DIR}"
-  chmod g+s "${STATE_DIR}"
+  sudo mkdir -p --mode=770 "${STATE_DIR}"
+  sudo chmod g+s "${STATE_DIR}"
 }
 
 # Generate a secret key for access to the Management API and store it in a tag.
@@ -227,7 +227,7 @@ function generate_certificate() {
     -subj "/CN=${PUBLIC_HOSTNAME}"
     -keyout "${SB_PRIVATE_KEY_FILE}" -out "${SB_CERTIFICATE_FILE}"
   )
-  openssl req "${openssl_req_flags[@]}" >/dev/null 2>&1
+  sudo openssl req "${openssl_req_flags[@]}" >/dev/null 2>&1
 }
 
 function generate_certificate_fingerprint() {
@@ -366,8 +366,8 @@ install_shadowbox() {
 
   log_for_sentry "Creating Outline directory"
   export SHADOWBOX_DIR="${SHADOWBOX_DIR:-/opt/outline}"
-  mkdir -p --mode=770 $SHADOWBOX_DIR
-  chmod u+s $SHADOWBOX_DIR
+  sudo mkdir -p --mode=770 $SHADOWBOX_DIR
+  sudo chmod u+s $SHADOWBOX_DIR
 
   log_for_sentry "Setting API port"
   API_PORT="${FLAGS_API_PORT}"
